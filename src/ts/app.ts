@@ -27,6 +27,9 @@ bot.telegram.setWebhook(process.env.LISTEN_URL, {
   source: process.env.TLS_CERT_PATH
 })
 
+// Start https webhook
+bot.startWebhook('/listen/messages', tlsOptions, 443)
+
 
 
 bot.start((ctx) => ctx.reply('Welcome'))
@@ -35,6 +38,7 @@ bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.launch()
 
+console.log('Bot is listening!');
 
 
 

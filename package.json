@@ -1,0 +1,26 @@
+{
+  "name": "cunygradebot",
+  "version": "0.0.0",
+  "description": "A Telegram bot for providing Queens College class and professor stats on demand",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelkolber/CUNYGradeBot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot"
+  ],
+  "author": "Michael Kolber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelkolber/CUNYGradeBot/issues"
+  },
+  "homepage": "https://github.com/michaelkolber/CUNYGradeBot#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

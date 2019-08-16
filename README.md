@@ -41,7 +41,6 @@ Abilities:
 
 
 ### **/help**
-
 Description: Detailed help for all available commands
 
 - Write up a detailed help, similar to this document.
@@ -49,7 +48,6 @@ Description: Detailed help for all available commands
 
 
 ## Database
-
 Probably going to use Redis, as it's super fast for lookups, and the data changes very infrequently.
 
 ### To-Do:
@@ -59,5 +57,8 @@ Probably going to use Redis, as it's super fast for lookups, and the data change
 
 
 ## Misc
-
 - Make sure the output looks nice. Remember that the target is mobile.
+
+
+## Wishlist
+- Update results based on edited messages (up to a certain point in history?)

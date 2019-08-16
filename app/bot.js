@@ -1,5 +1,16 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// Load environment variables
 require('dotenv').config();
+// Imports
+const parsers = __importStar(require("./parsers"));
 const fs = require('fs');
 const Telegraf = require('telegraf');
 // Make sure a bot token is defined
@@ -28,8 +39,8 @@ bot.startWebhook('/listen/messages', tlsOptions, 8443);
 bot.start((ctx) => ctx.reply('Welcome'));
 bot.help((ctx) => ctx.reply('Send me a sticker'));
 // Bot commands
-bot.command('class', middleware);
-bot.command('professor', middleware);
+bot.command('class', parsers.parseClass);
+bot.command('professor', parsers.parseProfessor);
 // Launch the bot
 bot.launch();
 console.log('Bot is listening!');

@@ -1,4 +1,8 @@
+// Load environment variables
 require('dotenv').config();
+
+// Imports
+import * as parsers from './parsers'
 
 const fs = require('fs');
 const Telegraf = require('telegraf');
@@ -47,8 +51,8 @@ bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 
 // Bot commands
-bot.command('class', middleware);
-bot.command('professor', middleware);
+bot.command('class', parsers.parseClass);
+bot.command('professor', parsers.parseProfessor);
 
 
 // Launch the bot

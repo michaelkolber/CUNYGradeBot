@@ -62,3 +62,4 @@ Probably going to use Redis, as it's super fast for lookups, and the data change
 
 ## Wishlist
 - Update results based on edited messages (up to a certain point in history?)
+- `/error` reports the message to the creator together with the results. Put it in the error messages too.

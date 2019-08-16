@@ -17,6 +17,10 @@ const tlsOptions = {
 bot.telegram.setWebhook(process.env.LISTEN_URL, {
     source: process.env.TLS_CERT_PATH
 });
+bot.use((ctx, next) => {
+    console.log(ctx.message);
+    next(ctx);
+});
 // Start https webhook
 bot.startWebhook('/listen/messages', tlsOptions, 8443);
 bot.start((ctx) => ctx.reply('Welcome'));

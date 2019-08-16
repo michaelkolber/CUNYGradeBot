@@ -21,11 +21,16 @@ const tlsOptions = {
     //   fs.readFileSync('client-cert.pem')
     // ]
 }
-  
+
 // Set telegram webhook
 bot.telegram.setWebhook(process.env.LISTEN_URL, {
-  source: process.env.TLS_CERT_PATH
+source: process.env.TLS_CERT_PATH
 })
+
+bot.use((ctx, next) => {
+    console.log(ctx.message);
+    next(ctx);
+});
 
 // Start https webhook
 bot.startWebhook('/listen/messages', tlsOptions, 8443)

@@ -109,5 +109,9 @@ venv.bak/
 /node_modules/
 
 
+# VS Code
+/.vscode/
+
+
 # Project-specific
 ./.env

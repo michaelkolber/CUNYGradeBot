@@ -27,7 +27,7 @@ function parseClassMessage(ctx) {
         message = extractArgument('course', message, parsedArguments, true);
         message = extractArgument('professor', message, parsedArguments);
     } catch (error) {
-        ctx.reply(error.toString())
+        ctx.reply(error.toString());
         return;
     }
     
@@ -55,7 +55,7 @@ function extractArgument(parameterName: string, message: string, parsedArguments
         throw new TooManyArgumentsError(parameterName, matches);
     }
     
-    let argumentValue: object;
+    let argumentValue: string|object;
     
     if (parameterName == 'course')
         argumentValue = parseCourse(matches[0]);
@@ -109,25 +109,25 @@ function parseCourse(input: string) {
  * - [Lastname, Firstname]
  */
 function parseProfessor(input: string) {
-    let lastname: string;
+    let lastName: string;
     let firstInitial: string|null;
     
     let parts: string[];
     
     if (input.indexOf(',') != -1) {
         parts = input.split(',');
-        lastname = parts[0].trim();  // To account for spaces before the comma
+        lastName = parts[0].trim();  // To account for spaces before the comma
         firstInitial = parts[1].trim().charAt(0);  // To account for space(s) after the comma
     } else if (input.indexOf(' ') != -1) {
         parts = input.split(' ');
         firstInitial = parts[0].trim().charAt(0);  // Trim to account for extra whitespace between the names
-        lastname = parts[1].trim();
+        lastName = parts[1].trim();
     } else {
-        lastname = input;
+        lastName = input;
         firstInitial = null;
     }
     
-    return {lastname, firstInitial};
+    return {lastName, firstInitial};
 }
 
 /**
@@ -151,7 +151,7 @@ function parseSection(input: string) {
         throw new ParserError(input, 'section', "Could not find a space, 'section', or 'sec' in the string.");
     }
     
-    return {section};
+    return section;
 }
 
 /**
@@ -212,7 +212,7 @@ function parseSemester(input: string) {
     semester = `${tempSeason} ${tempYear}`;
     
     
-    return {semester};
+    return semester;
 }
 
 

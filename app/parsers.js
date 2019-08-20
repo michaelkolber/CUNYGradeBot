@@ -95,24 +95,24 @@ function parseCourse(input) {
  * - [Lastname, Firstname]
  */
 function parseProfessor(input) {
-    let lastname;
+    let lastName;
     let firstInitial;
     let parts;
     if (input.indexOf(',') != -1) {
         parts = input.split(',');
-        lastname = parts[0].trim(); // To account for spaces before the comma
+        lastName = parts[0].trim(); // To account for spaces before the comma
         firstInitial = parts[1].trim().charAt(0); // To account for space(s) after the comma
     }
     else if (input.indexOf(' ') != -1) {
         parts = input.split(' ');
         firstInitial = parts[0].trim().charAt(0); // Trim to account for extra whitespace between the names
-        lastname = parts[1].trim();
+        lastName = parts[1].trim();
     }
     else {
-        lastname = input;
+        lastName = input;
         firstInitial = null;
     }
-    return { lastname, firstInitial };
+    return { lastName, firstInitial };
 }
 /**
  * Parse a string that contains a section, consisting of a keyword and a section number.
@@ -136,7 +136,7 @@ function parseSection(input) {
     else {
         throw new errors_1.ParserError(input, 'section', "Could not find a space, 'section', or 'sec' in the string.");
     }
-    return { section };
+    return section;
 }
 /**
  * Parse a string that contains a semester, consisting of a season and a year.
@@ -188,7 +188,7 @@ function parseSemester(input) {
             break;
     }
     semester = `${tempSeason} ${tempYear}`;
-    return { semester };
+    return semester;
 }
 // Middleware to parse a professor message
 function parseProfessorMessage(ctx, next) {

@@ -4,16 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const errors_1 = require("./errors");
 // Regular expressions
 const classRegexes = {
-    course: /[a-z]+ ?\d{2,4}/,
-    professor: /[a-z]+,?( [a-z]+)?/,
-    section: /sec(tion)? ?\d/,
-    semester: /(f|fall|s|spring) ?'?(\d\d){1,2}/,
+    course: /\b[a-z]+ ?\d{2,4}\b/g,
+    professor: /\b[a-z]+,?( [a-z]+)?\b/g,
+    section: /\bsec(tion)? ?\d\b/g,
+    semester: /\b(fall|spring|f|s) ?'?(\d\d){1,2}\b/g,
 };
 // Middleware to parse a class message. Start with the least ambiguous token and move on from there
 function parseClassMessage(ctx) {
     console.log('parseClassMessage called'); // DEBUG
-    // Take a substring to exclude the `/class` command at the beginning
-    let message = ctx.message.text.toLowerCase().substring(6);
+    // Take a substring to exclude the `/class ` command at the beginning
+    let message = ctx.message.text.toLowerCase().substring(7);
     let parsedArguments = {}; // tslint:disable-line:prefer-const
     // TODO: Handle all errors
     // Parse the arguments from least to most ambiguous.
@@ -21,7 +21,7 @@ function parseClassMessage(ctx) {
     message = extractArgument('semester', message, parsedArguments);
     message = extractArgument('course', message, parsedArguments, true);
     message = extractArgument('professor', message, parsedArguments);
-    ctx.reply(JSON.stringify(parsedArguments));
+    ctx.reply(JSON.stringify(parsedArguments, null, 2));
 }
 exports.parseClassMessage = parseClassMessage;
 /**
@@ -65,7 +65,7 @@ function extractArgument(parameterName, message, parsedArguments, required = fal
  */
 function parseCourse(input) {
     const department = input.match(/[a-z]+/);
-    const courseNumber = input.match(/\d+w+/);
+    const courseNumber = input.match(/\d+\w+?/);
     // Validation
     if (department == null || department.length > 1 || courseNumber == null || courseNumber.length > 1) {
         let additionalInfo;
@@ -121,10 +121,10 @@ function parseSection(input) {
     if (input.indexOf(' ') != -1) {
         section = input.split(' ')[1].trim(); // Trim to account for multiple spaces between the words
     }
-    else if (input.indexOf('section') == 1) {
+    else if (input.indexOf('section') == 0) {
         section = input.substring(7);
     }
-    else if (input.indexOf('sec') == 1) {
+    else if (input.indexOf('sec') == 0) {
         section = input.substring(3);
     }
     else {
@@ -157,7 +157,7 @@ function parseSemester(input) {
     let tempSeason;
     let tempYear;
     // Parse the tokens
-    const seasonMatches = input.match(/s|spring|f|fall/);
+    const seasonMatches = input.match(/fall|spring|f|s/);
     if (seasonMatches == null) {
         throw new errors_1.ParserError(input, 'semester', "Could not find an instance of 's', 'spring', 'f', or 'fall' in input string.");
     }

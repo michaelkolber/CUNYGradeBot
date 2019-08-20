@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Load environment variables
 require('dotenv').config();
 
@@ -31,8 +33,8 @@ const tlsOptions = {
 
 // Set up the webhook
 bot.telegram.setWebhook(process.env.LISTEN_URL, {
-source: process.env.TLS_CERT_PATH
-})
+    source: process.env.TLS_CERT_PATH
+});
 
 
 // Print all messages to the console
@@ -40,10 +42,6 @@ bot.use((ctx, next) => {
     console.log(ctx.message);
     next(ctx);
 });
-
-
-// Start https webhook
-bot.startWebhook('/listen/messages', tlsOptions, 8443);  // TODO: Use secret path?
 
 
 // Global commands
@@ -55,6 +53,7 @@ bot.command('class', parsers.parseClassMessage);
 bot.command('professor', parsers.parseProfessorMessage);
 
 
-// Launch the bot
-bot.launch()
+// Launch the bot via a webhook
+bot.startWebhook('/listen/messages', tlsOptions, 8443);  // TODO: Use secret path?
+// bot.launch();
 console.log('Bot is listening!');

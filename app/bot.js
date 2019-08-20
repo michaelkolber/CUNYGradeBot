@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -33,14 +34,13 @@ bot.use((ctx, next) => {
     console.log(ctx.message);
     next(ctx);
 });
-// Start https webhook
-bot.startWebhook('/listen/messages', tlsOptions, 8443); // TODO: Use secret path?
 // Global commands
 bot.start((ctx) => ctx.reply('Welcome'));
 bot.help((ctx) => ctx.reply('Send me a sticker'));
 // Bot commands
 bot.command('class', parsers.parseClassMessage);
 bot.command('professor', parsers.parseProfessorMessage);
-// Launch the bot
-bot.launch();
+// Launch the bot via a webhook
+bot.startWebhook('/listen/messages', tlsOptions, 8443); // TODO: Use secret path?
+// bot.launch();
 console.log('Bot is listening!');

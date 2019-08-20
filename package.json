@@ -1,15 +1,15 @@
 {
-  "name": "cunygradebot",
+  "name": "gradebot",
   "version": "0.0.0",
   "description": "A Telegram bot for providing Queens College class and professor stats on demand",
   "main": "app/bot.js",
   "scripts": {
-    "start": "node app/app.js",
+    "start": "node app/bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/michaelkolber/CUNYGradeBot.git"
+    "url": "git+https://github.com/michaelkolber/gradebot.git"
   },
   "keywords": [
     "telegram",
@@ -18,12 +18,11 @@
   "author": "Michael Kolber",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/michaelkolber/CUNYGradeBot/issues"
+    "url": "https://github.com/michaelkolber/gradebot/issues"
   },
-  "homepage": "https://github.com/michaelkolber/CUNYGradeBot#readme",
+  "homepage": "https://github.com/michaelkolber/gradebot#readme",
   "dependencies": {
     "dotenv": "^8.0.0",
-    "express": "^4.17.1",
     "telegraf": "^3.32.0"
   },
   "devDependencies": {

@@ -10,7 +10,7 @@ const Telegraf = require('telegraf');
 
 // Make sure a bot token is defined
 if (process.env.TOKEN == undefined) {
-    throw "You must specify TOKEN in a .env file in the root directory.";
+    throw new Error('You must specify TOKEN in a .env file in the root directory.');
 }
 
 

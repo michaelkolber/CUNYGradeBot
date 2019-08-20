@@ -54,6 +54,8 @@ Probably going to use Redis, as it's super fast for lookups, and the data change
 - Find a way to load the Excel data into Redis
     - See if Redis can save the DB and load it again instead of having to rebuild each time we start the app.
 - Run requests through our parser, make the appropriate Redis queries, build a message, and return to user
+- String sanitization
+- Properly handle and return error messages
 
 
 ## Misc

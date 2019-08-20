@@ -43,7 +43,7 @@ bot.use((ctx, next) => {
 
 
 // Start https webhook
-bot.startWebhook('/listen/messages', tlsOptions, 8443)
+bot.startWebhook('/listen/messages', tlsOptions, 8443);  // TODO: Use secret path?
 
 
 // Global commands
@@ -51,8 +51,8 @@ bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 
 // Bot commands
-bot.command('class', parsers.parseClass);
-bot.command('professor', parsers.parseProfessor);
+bot.command('class', parsers.parseClassMessage);
+bot.command('professor', parsers.parseProfessorMessage);
 
 
 // Launch the bot

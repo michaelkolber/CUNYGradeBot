@@ -21,10 +21,15 @@ function parseClassMessage(ctx) {
     // TODO: Handle all errors
     
     // Parse the arguments from least to most ambiguous.
-    message = extractArgument('section', message, parsedArguments);
-    message = extractArgument('semester', message, parsedArguments);
-    message = extractArgument('course', message, parsedArguments, true);
-    message = extractArgument('professor', message, parsedArguments);
+    try {
+        message = extractArgument('section', message, parsedArguments);
+        message = extractArgument('semester', message, parsedArguments);
+        message = extractArgument('course', message, parsedArguments, true);
+        message = extractArgument('professor', message, parsedArguments);
+    } catch (error) {
+        ctx.reply(error.toString())
+        return;
+    }
     
     ctx.reply(JSON.stringify(parsedArguments, null, 2));
 }

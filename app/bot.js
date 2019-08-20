@@ -44,3 +44,4 @@ bot.command('professor', parsers.parseProfessorMessage);
 bot.startWebhook('/listen/messages', tlsOptions, 8443); // TODO: Use secret path?
 // bot.launch();
 console.log('Bot is listening!');
+//# sourceMappingURL=bot.js.map

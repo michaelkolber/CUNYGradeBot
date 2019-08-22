@@ -20,15 +20,16 @@ if (process.env.TOKEN == undefined) {
 }
 // Initialize the bot
 const bot = new Telegraf(process.env.TOKEN);
-// TLS options
-const tlsOptions = {
-    key: fs.readFileSync(process.env.TLS_KEY_PATH),
-    cert: fs.readFileSync(process.env.TLS_CERT_PATH),
-};
-// Set up the webhook
-bot.telegram.setWebhook(process.env.LISTEN_URL, {
-    source: process.env.TLS_CERT_PATH
-});
+/* Set the webhook on Telegram's side. Since we're using a valid cert, we don't need to
+ * include our public certificate.
+ */
+bot.telegram.setWebhook('https://' +
+    process.env.LISTEN_HOST +
+    ':' +
+    process.env.LISTEN_PORT +
+    process.env.LISTEN_PATH);
+// Disable webhook replies, as they don't seem to work.
+bot.telegram.webhookReply = false;
 // Print all messages to the console
 bot.use((ctx, next) => {
     console.log(ctx.message);
@@ -40,8 +41,12 @@ bot.help((ctx) => ctx.reply('Send me a sticker'));
 // Bot commands
 bot.command('class', parsers.parseClassMessage);
 bot.command('professor', parsers.parseProfessorMessage);
-// Launch the bot via a webhook
-bot.startWebhook('/listen/messages', tlsOptions, 8443); // TODO: Use secret path?
-// bot.launch();
+// TLS options
+const tlsOptions = {
+    key: fs.readFileSync(process.env.TLS_KEY_PATH),
+    cert: fs.readFileSync(process.env.TLS_CERT_PATH),
+};
+// Start listening
+bot.startWebhook(process.env.LISTEN_PATH, tlsOptions, process.env.LISTEN_PORT); // TODO: Use secret path?
 console.log('Bot is listening!');
 //# sourceMappingURL=bot.js.map

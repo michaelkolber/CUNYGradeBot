@@ -2,9 +2,9 @@
 require('dotenv').config();
 
 // Requires
-const fs = require('fs');
-const pino = require('pino');
-const Telegraf = require('telegraf');
+import fs = require('fs');
+import pino = require('pino');
+import Telegraf = require('telegraf');
 
 // Imports
 import * as parsers from './parsers'
@@ -12,7 +12,14 @@ import * as parsers from './parsers'
 
 
 // Set up logger
-const logger = pino({level: process.env.LOG_LEVEL || 'info'});
+const logger = pino({
+    base: {
+        pid: process.pid,
+    },
+    level: process.env.LOG_LEVEL || 'info',
+});
+const infoLogger = logger.child({type: 'info'});
+const messageLogger = logger.child({type: 'message'});
 
 // Make sure a bot token is defined
 if (process.env.TOKEN == undefined) {
@@ -34,9 +41,23 @@ bot.telegram.setWebhook('https://' +
 // Disable webhook replies, as they don't seem to work.
 bot.telegram.webhookReply = false;
 
-// Print all messages to the console
+// Log message stats to avoid abuse end ensure messages are
+// coming through on time. Keep logging to a minimum.
 bot.use((ctx, next) => {
-    logger.debug(ctx.message);
+    const message = ctx.message;
+    let stats = {
+        message_timestamp:  message.date,
+        sender_id:          message.from.id,
+        sender_is_bot:      message.from.is_bot,
+        chat_id:            message.chat.id,
+        chat_type:          message.chat.type,
+    };
+    
+    if (ctx.message.chat.type == 'group') {
+        stats.group_name = ctx.message.chat.title;
+    }
+    
+    messageLogger.info(stats);
     next(ctx);
 });
 
@@ -59,4 +80,6 @@ const tlsOptions = {
 // Start listening
 bot.startWebhook(process.env.LISTEN_PATH, tlsOptions, process.env.LISTEN_PORT);  // TODO: Use secret path?
 
-logger.info(`Gradebot is listening! Host: ${process.env.LISTEN_HOST} | Port: ${process.env.LISTEN_PORT}`);
+infoLogger.info('Gradebot is listening!');
+infoLogger.info(`Host: ${process.env.LISTEN_HOST}`);
+infoLogger.info(`Port: ${process.env.LISTEN_PORT}`);

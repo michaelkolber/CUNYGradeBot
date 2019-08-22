@@ -114,4 +114,5 @@ venv.bak/
 
 
 # Project-specific
-./.env
+/.env
+/logs/

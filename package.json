@@ -2,9 +2,10 @@
   "name": "gradebot",
   "version": "0.0.0",
   "description": "A Telegram bot for providing Queens College class and professor stats on demand",
-  "main": "app/bot.js",
+  "main": "app/bot/bot.js",
   "scripts": {
-    "start": "node app/bot.js",
+    "start": "node app/bot/bot.js",
+    "log": "node app/bot/bot.js >> ./logs/log.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

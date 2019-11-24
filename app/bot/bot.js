@@ -40,8 +40,10 @@ bot.telegram.setWebhook('https://' +
     process.env.LISTEN_PATH);
 // Disable webhook replies, as they don't seem to work.
 bot.telegram.webhookReply = false;
-// Log message stats to avoid abuse end ensure messages are
-// coming through on time. Keep logging to a minimum.
+/* Log message stats to avoid abuse and ensure messages are
+ * coming through on time. Keep logging to a minimum. DO NOT
+ * log message text.
+ */
 bot.use((ctx, next) => {
     const message = ctx.message;
     let stats = {

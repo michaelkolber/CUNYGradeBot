@@ -7,7 +7,7 @@ import pino = require('pino');
 import Telegraf = require('telegraf');
 
 // Imports
-import * as parsers from './parsers'
+import * as parsers from './parsers';
 
 
 
@@ -41,7 +41,7 @@ bot.telegram.setWebhook('https://' +
 // Disable webhook replies, as they don't seem to work.
 bot.telegram.webhookReply = false;
 
-// Log message stats to avoid abuse end ensure messages are
+// Log message stats to avoid abuse and ensure messages are
 // coming through on time. Keep logging to a minimum.
 bot.use((ctx, next) => {
     const message = ctx.message;

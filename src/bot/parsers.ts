@@ -39,7 +39,7 @@ function parseClassMessage(ctx) {
  * are multiple matches, or if there are no matches and the argument is required. Otherwise,
  * it adds the argument to an argument list and returns a new string without the matched text.
  */
-function extractArgument(parameterName: string, message: string, parsedArguments: object, required=false) {
+function extractArgument(parameterName: string, message: string, parsedArguments: object, required = false) {
     // TODO: Write a test that could trip up this function. E.g. The first initial could be F, which could be parsed as fall semester.
     let matches = message.match(classRegexes[parameterName]);
     if (matches == null) {

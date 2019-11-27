@@ -1,0 +1,4 @@
+This directory should contain your keys and certificates.
+
+`privkey.pem`  : the private key for your certificate.
+`fullchain.pem`: the certificate file used in most server software.

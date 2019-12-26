@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * A collection of miscelanious functions that are used throughout the database API.
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Sends a response back to the client with the detais of the error.
@@ -43,6 +46,8 @@ exports.sendErrorMessage = sendErrorMessage;
  * @param reason The reason that the request failed.
  */
 function createResultMessage(result) {
+    if (result === undefined)
+        result = null; // To make sure we always send a result
     const message = {
         ok: true,
         result,

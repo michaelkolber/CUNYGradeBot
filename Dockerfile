@@ -1,6 +1,6 @@
 # To start the Docker image, build the image
 # Copy your privatekey and fullchain into the ssl/ folder at the root of this project
-# Then, run `sudo docker run -d -v ~/apps/gradebot/ssl:/gradedebotSSLKeys:ro -p 8443:8443 yourImageName`
+# Then, run `sudo docker run -d -v ~/apps/gradebot/ssl:/gradebotSSLKeys:ro -p 8443:8443 yourImageName`
 # To see output in the terminal, omit the `-d`
 
 

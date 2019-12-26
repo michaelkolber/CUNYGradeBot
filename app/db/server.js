@@ -18,6 +18,8 @@ const apiRouter = express.Router(); // Tie everything to this router so that we 
 app.use('/api', apiRouter);
 const classesRouter = require("./routes/classes");
 apiRouter.use('/classes', classesRouter);
+const professorsRouter = require("./routes/professors");
+apiRouter.use('/professors', professorsRouter);
 const searchRouter = require("./routes/search");
 apiRouter.use('/search', searchRouter);
 // Catch-all. Also serves as an easy way to make sure the API is up.

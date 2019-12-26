@@ -17,7 +17,7 @@ router.route('/:classId')
     // Handle getting of a specific class by its ID.
     .get((req, res) => {
     classes.getClassById(req.params.classId)
-        .then((result) => { res.json(helpers_1.createResultMessage(result.rows[0])); })
+        .then((result) => { res.json(helpers_1.createResultMessage(result)); })
         .catch((err) => { helpers_1.handleError(err, res); });
 });
 module.exports = router;

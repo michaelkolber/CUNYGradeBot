@@ -4,6 +4,8 @@
  * Allow for getting classes or professors based on specific criteria.
  */
 const express = require("express");
+const classes_1 = require("../accessors/classes");
+const professors_1 = require("../accessors/professors");
 const connection = require("../dbConnection");
 const helpers_1 = require("../helpers");
 const client = connection.client;
@@ -40,62 +42,23 @@ router.route('/')
     if (!isValidQuery(searchQuery, res))
         return;
     if (searchQuery.type == 'class') {
-        // Build the query
-        let sqlQuery = `SELECT
-                                 course.department,
-                                 course.number,
-                                 class.semester,
-                                 class.section,
-                                 professor.first_name,
-                                 professor.last_name
-                             FROM
-                                 classes class
-                             LEFT JOIN
-                                 courses course ON class.course_id = course.id
-                             LEFT JOIN
-                                 professors professor ON class.professor_id = professor.id
-                             WHERE
-                                 course.department = $1
-                                 AND course.number = $2
-                                 `;
-        const parameters = [searchQuery.course.department, searchQuery.course.number]; // These are required, so we know they'll be in the search query.
-        if (searchQuery.professor) {
-            // `.push()` returns the length of the array -- we'll use that to keep track of the parameter number
-            sqlQuery += 'AND professor.last_name = $' + parameters.push(searchQuery.professor.lastName);
-            if (searchQuery.professor.firstName) {
-                sqlQuery += 'AND professor.first_name = $' + parameters.push(searchQuery.professor.firstName);
-            }
-        }
-        if (searchQuery.section)
-            sqlQuery += 'AND class.section = $' + parameters.push(searchQuery.section);
-        if (searchQuery.semester)
-            sqlQuery += 'AND class.semester = $' + parameters.push(searchQuery.semester);
-        client.query(sqlQuery, parameters)
+        classes_1.searchClasses(searchQuery)
             .then((result) => {
-            // We need to put this in a more user-friendly format
-            const classes = [];
-            for (const row of result.rows) {
-                const classObj = {
-                    course: {
-                        department: row.department,
-                        number: row.number,
-                    },
-                    professor: {
-                        firstName: row.first_name,
-                        lastName: row.last_name,
-                    },
-                    section: row.section,
-                    semester: row.semester,
-                };
-                classes.push(classObj);
-            }
-            // Send the result to the user
-            res.json(helpers_1.createResultMessage(classes));
+            res.json(helpers_1.createResultMessage(result));
         })
             .catch((err) => {
             helpers_1.handleError(err, res);
         });
+        return;
     }
+    // Otherwise the query is for a professor
+    professors_1.searchProfessors(searchQuery)
+        .then((result) => {
+        res.json(helpers_1.createResultMessage(result));
+    })
+        .catch((err) => {
+        helpers_1.handleError(err, res);
+    });
 })
     // Catch-all.
     .all((req, res) => {

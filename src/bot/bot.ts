@@ -65,8 +65,8 @@ bot.use((ctx, next) => {
 
 
 // Global commands
-bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Use /class or /professor'))
+bot.start((ctx) => ctx.reply('Welcome'));
+bot.help((ctx) => ctx.reply('Use /class or /professor'));
 
 // Bot commands
 bot.command('class', parsers.parseClassMessage);

@@ -8,7 +8,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const dbConnection = require("./dbConnection"); // The connection lives here and is `require`ed whenever needed. Relies on Node's module caching.
-const helpers = require("./helpers");
+const helpers = require("./helpers/helpers");
 const app = express();
 const port = process.env.PORT || 1900;
 // Make sure JSON is parsed properly
@@ -21,8 +21,7 @@ apiRouter.use('/search', require('./routes/search'));
 app.use('/api', apiRouter);
 // Catch-all. Also serves as an easy way to make sure the API is up.
 app.all('/', (req, res) => {
-    const message = helpers.createErrorMessage("All requests must go through '/api'.");
-    res.status(403).json(message);
+    helpers.controllers.sendErrorMessage(res, "All requests must go through '/api'.", 403);
 });
 // Connect to the database before starting up the server
 dbConnection.client.connect()

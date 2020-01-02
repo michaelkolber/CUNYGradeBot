@@ -1,0 +1,3 @@
+[submodule "classbase"]
+	path = classbase
+	url = https://github.com/michaelkolber/classbase.git

@@ -4,7 +4,7 @@ require('dotenv').config();
 // Requires
 import fs = require('fs');
 import pino = require('pino');
-import Telegraf = require('telegraf');
+const Telegraf = require('telegraf');
 
 // Imports
 import * as parsers from './parsers';
@@ -47,7 +47,7 @@ bot.telegram.webhookReply = false;
  */
 bot.use((ctx, next) => {
     const message = ctx.message;
-    let stats = {
+    const stats: any = {
         message_timestamp:  message.date,
         sender_id:          message.from.id,
         sender_is_bot:      message.from.is_bot,
@@ -75,8 +75,8 @@ bot.command('professor', parsers.parseProfessorMessage);
 
 // TLS options
 const tlsOptions = {
-    cert: fs.readFileSync(process.env.TLS_CERT_PATH),
-    key: fs.readFileSync(process.env.TLS_KEY_PATH),
+    cert: fs.readFileSync(process.env.TLS_CERT_PATH || './ssl/privkey.pem'),
+    key: fs.readFileSync(process.env.TLS_KEY_PATH || './ssl/fullchain.pem'),
 };
 
 // Start listening

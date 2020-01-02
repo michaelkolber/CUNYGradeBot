@@ -4,9 +4,7 @@
   "description": "A Telegram bot for providing Queens College class and professor stats on demand",
   "main": "app/bot/bot.js",
   "scripts": {
-    "start": "node app/bot/bot.js",
-    "log": "node app/bot/bot.js >> ./logs/log.txt",
-    "dev": "docker build . -t gradebot && docker run -v C:/Users/Michael/nobackup/Code/Projects/gradebot/ssl/test.gradebot.apps:/gradebotSSLKeys:ro -p 8443:8443 gradebot",
+    "populate": "docker build -t gradebot_populate -f ./classbase/database/Dockerfile-python ./classbase/database && docker run --rm --network gradebot_backend gradebot_populate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,12 +22,11 @@
   },
   "homepage": "https://github.com/michaelkolber/gradebot#readme",
   "dependencies": {
-    "@types/pg": "^7.14.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "pg": "^7.15.1",
     "pino": "^5.13.2",
-    "telegraf": "^3.32.0"
+    "telegraf": "^3.35.0",
+    "typescript": "^3.7.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.0",

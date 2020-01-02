@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+    postgres:
+        build: ./classbase/database
+        image: postgres
+        networks:
+            - backend
+        volumes:
+            # - ./postgresdata/config:/etc/postgresql
+            # - ./postgresdata/log:/var/log/postgresql
+            - postgresdata:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+    
+    # postgres-setup:
+    #     build:
+    #         context: ./classbase/database
+    #         dockerfile: Dockerfile-python
+    #     depends_on:
+    #         - postgres
+    #     image: postgres-setup
+    #     networks:
+    #         - backend
+    
+    classbase:
+        build: ./classbase
+        depends_on:
+            - postgres
+        image: classbase
+        networks:
+            - frontend
+            - backend
+        ports:
+            - "1900:1900"
+
+    gradebot:
+        build: .
+        depends_on:
+            - classbase
+        image: gradebot
+        networks:
+            - frontend
+        ports:
+            - "8443:8443"  # Specify as string due to YAML base-60 parsing; see https://docs.docker.com/compose/compose-file/#ports
+
+
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge
+
+
+volumes:
+    postgresdata:
+        

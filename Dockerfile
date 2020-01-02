@@ -13,13 +13,20 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
-
 RUN npm install
 
 # Bundle app source
-COPY . .
+COPY src/ src/
+COPY tsconfig.json .
+# Compile the source
+RUN npx tsc
+
+# Copy the SSL certs
+COPY ssl/ ssl/
+# Copy the environment variables
+COPY .env .
 
 # Telegram only communicates on a few specific ports
 EXPOSE 8443
 
-CMD [ "node", "app/bot/bot.js" ]
+CMD [ "node", "build/bot.js" ]

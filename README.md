@@ -1,5 +1,34 @@
-# CUNYGradeBot
-A Telegram bot for providing Queens College class and professor stats on demand
+# Gradebot
+A Telegram bot for providing Queens College class and professor stats on demand.
+
+
+# Running Gradebot
+## Main Instructions
+Make sure you have Docker installed. Then, inside the main directory, run 
+`docker-compose up -d`. You can use `docker-compose logs -f` to see the logs in realtime.
+
+To stop Gradebot, run `docker-compose down`. (To make sure everything is cleaned up when 
+shutting down Gradebot, run `docker-compose down -v` instead. **This will clear the database.**)
+
+## Populating the Database
+Copy your `distribution.csv` file into `classbase/database/data/`. It should be taken from 
+the "COMBINED" sheet in the grade distribution Excel file.
+
+Then, run `npm run populate`.
+
+
+# Info
+Gradebot is comprised of two separate components:
+
+1. The chatbot itself. This is implemented in Node.js using the 
+[Telegraf](https://github.com/telegraf/telegraf) framework.
+2. [Classbase](https://github.com/michaelkolber/classbase), a Postgres-powered database 
+and associated Node.js (Express) API of courses and professors in CUNY (right now only 
+Queens College). The README in that repo goes into more detail about its construction.
+
+The entire thing is bundled into a series of Docker containers. The code assumes that it 
+will be run in Docker, although this should not be difficult to change should the need arise.
+
 
 # Roadmap
 
@@ -46,13 +75,7 @@ Description: Detailed help for all available commands
 - Write up a detailed help, similar to this document.
 
 
-
-## Database
-Probably going to use Redis, as it's super fast for lookups, and the data changes very infrequently.
-
 ### To-Do:
-- Find a way to load the Excel data into Redis
-    - See if Redis can save the DB and load it again instead of having to rebuild each time we start the app.
 - Run requests through our parser, make the appropriate Redis queries, build a message, and return to user
 - String sanitization
 - Properly handle and return error messages

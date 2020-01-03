@@ -3,7 +3,15 @@ A Telegram bot for providing Queens College class and professor stats on demand.
 
 
 # Running Gradebot
-## Main Instructions
+## Setup
+First, you need to initialize and update the Classbase submodule. To do that, clone this 
+repo using `git clone --recurse-submodules https://github.com/michaelkolber/gradebot`. 
+This will initialize the submodule inside the `classbase/` directory.
+
+If you've already cloned the repo, you can just run `git submodule update --init` inside 
+the repo.
+
+## Starting Gradebot
 Make sure you have Docker installed. Then, inside the main directory, run 
 `docker-compose up -d`. You can use `docker-compose logs -f` to see the logs in realtime.
 

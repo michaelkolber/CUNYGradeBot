@@ -2,7 +2,7 @@
   "name": "gradebot",
   "version": "0.0.0",
   "description": "A Telegram bot for providing Queens College class and professor stats on demand",
-  "main": "app/bot/bot.js",
+  "main": "build/bot.js",
   "scripts": {
     "populate": "docker build -t gradebot_populate -f ./classbase/database/Dockerfile-python ./classbase/database && docker run --rm --network gradebot_backend gradebot_populate",
     "test": "echo \"Error: no test specified\" && exit 1"

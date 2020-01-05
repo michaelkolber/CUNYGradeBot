@@ -80,7 +80,26 @@ const tlsOptions = {
 };
 
 // Start listening
-bot.startWebhook(process.env.LISTEN_PATH, tlsOptions, process.env.LISTEN_PORT);  // TODO: Use secret path?
+bot.startWebhook(process.env.LISTEN_PATH, tlsOptions, process.env.LISTEN_PORT);
+
+// Set the username so the bot can respond appropriately to `/command@BotUsername`-style messages
+bot.telegram.getMe()
+    .then((result) => {
+        bot.options.username = result.username;
+        infoLogger.info(`Bot username retrieved as '${result.username}'.`);
+    })
+    .catch((err) => {
+        logger.error("An error occurred when trying to get the bot's username.\n" + err);
+    });
+
+// Restart the bot so the detected username can take effect
+bot.stop()
+    .then(() => {
+        bot.startWebhook(process.env.LISTEN_PATH, tlsOptions, process.env.LISTEN_PORT);
+    })
+    .catch((err) => {
+        logger.error('Failed to restart the bot.\n' + err);
+    });
 
 infoLogger.info('Gradebot is listening!');
 infoLogger.info(`Host: ${process.env.LISTEN_HOST}`);

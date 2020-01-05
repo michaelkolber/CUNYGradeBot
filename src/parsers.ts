@@ -5,7 +5,7 @@ import {MissingArgumentError, ParserError, TooManyArgumentsError, ValueError} fr
 const classRegexes = {
     course: /\b[a-z]+ ?\d{2,4}\b/g,
     professor: /\b[a-z]+,?( [a-z]+)?\b/g,
-    section: /\bsec(tion)? ?\d\b/g,
+    section: /\bsec(tion)? ?[a-z\d]+\b/g,
     semester: /\b(fall|spring|f|s) ?'?(\d\d){1,2}\b/g,
 };
 
